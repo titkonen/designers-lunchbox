@@ -5,9 +5,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Properties
     var ideas: [NSManagedObject] = []
     
-    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,12 +27,17 @@ class ViewController: UIViewController {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Project")
+        // SORTING
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Project.nimi), ascending: true)]
+        
         
         do {
             ideas = try managedContext.fetch(fetchRequest)
         }   catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        //tableView.reloadData()
     }
     
     @IBAction func addIdea(_ sender: UIBarButtonItem) {
@@ -47,6 +53,8 @@ class ViewController: UIViewController {
               let tallennaIdea = textField.text else {
                 return
             }
+            
+            
             self.save(nimi: tallennaIdea)
             self.tableView.reloadData()
         }
@@ -99,9 +107,37 @@ extension ViewController: UITableViewDataSource {
         let oneIdea = ideas[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "IdeaListCell", for: indexPath)
         
-        cell.textLabel?.text = oneIdea.value(forKeyPath: "nimi") as? String
+//        cell.textLabel?.text = oneIdea.value(forKeyPath: "nimi") as? String
+//        cell.detailTextLabel?.text = oneIdea.value(forKeyPath: "nimi") as? String
+        
+        var content = cell.defaultContentConfiguration()
+
+        // Configure content.
+        content.image = UIImage(systemName: "star")
+        content.text = oneIdea.value(forKeyPath: "nimi") as? String
+        content.secondaryText = "ADD DATE() HERE"
+        
+
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        cell.frame.size.height = 80
+        
+        // Customize appearance.
+        content.imageProperties.tintColor = .red
+        content.imageProperties.maximumSize = CGSize(width: 40, height: 40)
+
+      
+
+        cell.contentConfiguration = content
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+      ideas.remove(at: indexPath.row)
+      
+      let indexPaths = [indexPath]
+      tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
 }
 

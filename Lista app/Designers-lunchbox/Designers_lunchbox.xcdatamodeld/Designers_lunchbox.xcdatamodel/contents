@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
+        <attribute name="kuvaus" optional="YES" attributeType="String"/>
+        <attribute name="luontipaiva" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="nimi" optional="YES" attributeType="String"/>
+        <attribute name="valokuva" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="Project" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>
