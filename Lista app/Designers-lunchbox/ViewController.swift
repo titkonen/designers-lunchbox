@@ -97,7 +97,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let oneIdea = ideas[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IdeaListCell", for: indexPath)
         
         cell.textLabel?.text = oneIdea.value(forKeyPath: "nimi") as? String
         
